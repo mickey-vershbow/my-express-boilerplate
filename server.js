@@ -1,17 +1,23 @@
 // grab env variables
-require("dotenv").config
+require("dotenv").config();
 // import express
-const express = require("express")
+const express = require("express");
 // import database connection
-const mongoose = require("./db/connection")
+const mongoose = require("./db/connection");
 // import merced logger
-const {log} = require("mercedlogger")
+const {log} = require("mercedlogger");
 // import middleware
-const methodOverride = require("method-override")
-const morgan = require("morgan")
-const cors = require("cors")
+const methodOverride = require("method-override");
+const morgan = require("morgan");
+const cors = require("cors");
+const authorization = require("./utils/authorization");
 // PORT VARIABLE
-const PORT = process.env.PORT || "2021"
+const PORT = process.env.PORT || "3000";
+
+const usersRouter = require("./routes/users");
+
+
+
 //////////////////////////////////
 // Create APP Object
 ///////////////////////////////////
@@ -41,4 +47,3 @@ app.get("/", (req, res) => {
 // App Listener
 //////////////////////////////////
 app.listen(PORT, () => log.white("🚀 Server Launch 🚀", `Listening on port ${PORT}`))
-
