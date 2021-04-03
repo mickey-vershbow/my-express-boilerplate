@@ -6,11 +6,10 @@
     <title>Profile Page</title>
 </head>
 <body>
-    <header>
-        <h1>Expresstagram</h1>
-        <%- include('../nav.ejs') %>
-    </header>
-    <h1>Hello and welcome to the profile page</h1>
-    <h2>From here, you can start your own collection, purchase items, add new products you discover, and search for alternatives to products you love that aren't reusable.</h2>
+        <h1>Sign Up</h1>
+        <form action="/users/signup" method="post">
+            Username: <input type="text" name="username"><br>
+            Password: <input type="password" name="password"><br>
+        <input type="submit" value="Sign Up!">
 </body>
 </html>

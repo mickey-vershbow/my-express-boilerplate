@@ -10,20 +10,22 @@ const {log} = require("mercedlogger");
 const methodOverride = require("method-override");
 const morgan = require("morgan");
 const cors = require("cors");
+const session = require("express-session");
 const authorization = require("./utils/authorization");
 // PORT VARIABLE
 const PORT = process.env.PORT || "3000";
 
 const usersRouter = require("./routes/users");
-
-
+const usersController = require("./controllers/users");
+const homeRouter = require("./routes/home");
+const homeController = require("./controllers/home");
 
 //////////////////////////////////
 // Create APP Object
 ///////////////////////////////////
 const app = express()
 //////////////////////////////////
-// Set the View Engine   
+// Set the View Engine
 //////////////////////////////////
 app.set("view engine", "ejs")
 ///////////////////////////////////
@@ -36,13 +38,30 @@ app.use(morgan("tiny")) // request logging
 app.use(express.json()) // parse json bodies
 app.use(express.urlencoded({extended: false}))
 
+app.use(
+  session({
+    secret: "keyboardcat",
+    resave: false,
+    saveUninitialized: false,
+  })
+);
+
+// req.user Middleware:
+// Reads the session and creates a req.user with the logged in user's info.
+app.use(authorization.addUserToRequest);
+
+
 ////////////////////////////////
 // Routes and Routers
 ////////////////////////////////
 // test route
-app.get("/", (req, res) => {
-    res.send("<h1>Hello World</h1>")
-})
+// app.get("/", (req, res) => {
+//     res.render("home")
+// })
+
+// Mount routes
+app.use("/", homeRouter);
+app.use("/users", usersRouter);
 ///////////////////////////////////
 // App Listener
 //////////////////////////////////
