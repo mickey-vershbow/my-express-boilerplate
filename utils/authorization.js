@@ -1,4 +1,4 @@
-const User = require('..models/user');
+const User = require('../models/user');
 
 // a function to add the user to a property called user on the request object
 // aka req.user
